@@ -11,16 +11,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-// @Component = Spring creates this class automatically at startup.
-// CommandLineRunner = its run() method executes once, right after the app starts.
 @Component
 public class DataLoader implements CommandLineRunner {
 
-    // The repositories we use to save data.
     private final EventRepository eventRepository;
     private final SeatRepository seatRepository;
 
-    // Constructor injection: Spring passes the repositories in for us.
     public DataLoader(EventRepository eventRepository, SeatRepository seatRepository) {
         this.eventRepository = eventRepository;
         this.seatRepository = seatRepository;
@@ -28,23 +24,18 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        // If events already exist, do nothing. This stops duplicate data
-        // from being inserted every time we restart the app.
+
         if (eventRepository.count() > 0) {
             return;
         }
 
-        // Save one sample event (30 days from now).
         Event event = eventRepository.save(
                 new Event("Flash Sale Concert", "Pune Arena", LocalDateTime.now().plusDays(30)));
 
-        // Build 10 seats: A1, A2 ... A10, all AVAILABLE by default.
         List<Seat> seats = new ArrayList<>();
         for (int i = 1; i <= 10; i++) {
             seats.add(new Seat(event, "A" + i));
         }
-
-        // Save all 10 seats to the database in one go.
         seatRepository.saveAll(seats);
     }
 }

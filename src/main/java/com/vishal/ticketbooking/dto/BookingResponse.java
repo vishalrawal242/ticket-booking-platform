@@ -6,7 +6,6 @@ import com.vishal.ticketbooking.entity.SeatStatus;
 
 import java.time.LocalDateTime;
 
-// The booking confirmation we send back: booking info + the seat's current status.
 public record BookingResponse(
         Long bookingId,
         Long userId,
@@ -16,7 +15,6 @@ public record BookingResponse(
         SeatStatus seatStatus,
         LocalDateTime createdAt) {
 
-    // Converts a Booking entity (and its Seat) into a BookingResponse.
     public static BookingResponse from(Booking booking) {
         return new BookingResponse(
                 booking.getId(),

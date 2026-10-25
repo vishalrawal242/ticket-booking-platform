@@ -1,26 +1,16 @@
-# Starts the PostgreSQL database that the ticket booking project needs.
-# Run it with:  docker compose up -d
 services:
   postgres:
-    # Official PostgreSQL image from Docker Hub.
     image: postgres:16
-    # Fixed container name so it is easy to find with "docker ps".
     container_name: ticket-postgres
     environment:
-      # Same username and password as in application.properties.
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      # The main database is created automatically on first start.
       POSTGRES_DB: ticketdb
     ports:
-      # Left = port on your laptop (5433, as the project uses), right = port inside the container.
       - "5433:5432"
     volumes:
-      # Keeps the data even if the container is removed.
       - ticket-pgdata:/var/lib/postgresql/data
-      # Runs once on first start to also create the test database.
       - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
 
-# Declares the storage volume used above.
 volumes:
   ticket-pgdata:
