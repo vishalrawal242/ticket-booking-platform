@@ -18,6 +18,28 @@ A ticket booking backend built with Java 21 and Spring Boot. It handles many use
 - Multi-threaded integration tests using ExecutorService, run against a PostgreSQL Docker container
 - Verified: 5 concurrent reservation requests for the same seat resulted in 0 double-bookings
 
+## How to Run
+
+You need Java and Docker Desktop installed. Make sure Docker Desktop is running, then:
+
+Start PostgreSQL:
+
+```
+docker compose up -d
+```
+
+Start the application:
+
+```
+./mvnw spring-boot:run
+```
+
+Run the tests (the database must be running):
+
+```
+./mvnw test
+```
+
 ## Author
 
 Vishal Rawal
