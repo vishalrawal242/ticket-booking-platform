@@ -52,6 +52,11 @@ class BookingConcurrencyTest {
         runConcurrentBookingTest(20);
     }
 
+    @Test
+    void hundredConcurrentRequests_onlyOneBookingSucceeds() throws Exception {
+        runConcurrentBookingTest(100);
+    }
+
     private void runConcurrentBookingTest(int threadCount) throws Exception {
 
         Event event = eventRepository.save(
